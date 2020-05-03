@@ -11,6 +11,7 @@ app = Flask(__name__)
 setup_db(app)
 CORS(app, resources={r"/*": {"origins": "http://localhost:8100"}})
 
+
 @app.after_request
 def after_request(response):
     response.headers.add('Access-Control-Allow-Headers',
@@ -61,7 +62,7 @@ def post_drinks(payload):
 
     try:
         drink.insert()
-    except:
+    except Exception:
         abort(500)
 
     return jsonify({
@@ -88,7 +89,7 @@ def patch_drinks(payload, drink_id):
 
     try:
         drink.update()
-    except:
+    except Exception:
         abort(500)
 
     return jsonify({
@@ -109,7 +110,7 @@ def delete_drinks(payload, drink_id):
 
     try:
         drink.delete()
-    except:
+    except Exception:
         abort(500)
 
     return jsonify({

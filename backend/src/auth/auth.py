@@ -13,12 +13,15 @@ API_AUDIENCE = 'coffee_shop'
 AuthError Exception
 A standardized way to communicate auth failure modes
 '''
+
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
         self.status_code = status_code
 
 # Auth Header
+
 
 def get_token_auth_header():
     auth_header = request.headers.get('Authorization', None)
@@ -53,6 +56,7 @@ def get_token_auth_header():
 
     return token
 
+
 def check_permissions(permission, payload):
     if 'permissions' not in payload:
         raise AuthError({
@@ -67,6 +71,7 @@ def check_permissions(permission, payload):
         }, 401)
 
     return True
+
 
 def verify_decode_jwt(token):
     jsonurl = urlopen(f'https://{AUTH0_DOMAIN}/.well-known/jwks.json')
@@ -122,6 +127,7 @@ def verify_decode_jwt(token):
         'code': 'invalid_header',
         'description': 'Unable to find the appropriate key'
     }, 401)
+
 
 def requires_auth(permission=''):
     def requires_auth_decorator(f):
